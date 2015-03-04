@@ -30,6 +30,9 @@ public class ImageListAdapter extends BaseAdapter {
 		this.context = context ;	
 		this.recordList = jsonRecords;
 		
+		/*
+		 * Initializing the universal image loader
+		 */
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 		.cacheInMemory(true)
 		.cacheOnDisk(true)
@@ -92,12 +95,10 @@ public class ImageListAdapter extends BaseAdapter {
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
-			//holder.image.setImageDrawable(R.drawable.loading_image);
 		}
 		
 		holder.title.setText(record.title);
 		holder.secondLine.setText(record.description);
-		//new ImageLoaderTask(holder.image, record.imageHref);
 		
 		if (record.imageHref != null) {
 			holder.image.setImageDrawable(context
@@ -113,30 +114,4 @@ public class ImageListAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
-	/*
-	 * This class is used to lazy load the images and load the cache
-	 * It refers the image from the cache based on availability
-	 */
-	private class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
-
-		private ImageView bmImage;
-	    private String imageUrl ;
-	    
-	    public ImageLoaderTask(ImageView bmImage, String url) {
-	        this.bmImage = bmImage;
-	        this.imageUrl = url ;
-	    }
-	    
-	    protected Bitmap doInBackground(String... urls) {
-	        return null;
-	    }
-
-	    protected void onPostExecute(Bitmap result) {
-	        bmImage.setImageBitmap(result);
-	        bmImage.setVisibility(View.VISIBLE) ;
-	    }
-		
-	}
-
 }
